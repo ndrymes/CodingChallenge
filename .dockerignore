@@ -32,6 +32,5 @@ server/*.spec.js
 kubernetes
 
 dist
-postgres-data
 venv
 coverage

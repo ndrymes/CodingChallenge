@@ -16,10 +16,12 @@ import { init } from 'src/init';
  */
 async function setupRoutes( app: Application ){
 
-  const { healthcheckController } = await init();
+  const { healthcheckController, rootController, userController } = await init();
 
   app.use( '/healthcheck', healthcheckController.getRouter() );
- 
+  app.use( '/', rootController.getRouter() );
+  app.use( '/user', userController.getRouter() );
+
 }
 
 /**
