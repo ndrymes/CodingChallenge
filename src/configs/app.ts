@@ -15,3 +15,4 @@ export const SENTRY_DSN = process.env.SENTRY_DSN || '';
 export const IS_PRODUCTION = NODE_ENV === 'production';
 export const IS_LOCAL = NODE_ENV === 'local';
 export const IS_TEST = NODE_ENV === 'test';
+export const JWT_TOKEN_SECRET = process.env.JWT_TOKEN_SECRET;

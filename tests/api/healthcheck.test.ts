@@ -1,37 +1,64 @@
+/* eslint-disable no-undef */
 import supertest from 'supertest';
-import { getConnection } from 'typeorm';
 
 import { createApp } from 'src/app';
 
-describe('Healthcheck Integration tests', () => {
-    let server: Express.Application;
+describe( 'Healthcheck Integration tests', ()=>{
 
-    beforeAll(async () => {
-        server = await createApp();
-    });
+  let server: Express.Application;
 
-    afterAll(async () => {
-        await getConnection().close();
-    });
+  beforeAll( async()=>{
 
-    describe('/healthcheck/liveness', () => {
-        it('returns 200', async () => {
-            const response = await supertest(server).get('/healthcheck/liveness');
-            expect(response.status).toBe(200);
-        });
-    });
+    server = await createApp();
 
-    describe('/healthcheck/readiness', () => {
-        it('returns 200', async () => {
-            const response = await supertest(server).get('/healthcheck/readiness');
-            expect(response.status).toBe(200);
-        });
-    });
+  } );
 
-    describe('/healthcheck/donotexist', () => {
-        it('returns 404', async () => {
-            const response = await supertest(server).get('/healthcheck/donotexist');
-            expect(response.status).toBe(404);
-        });
-    });
-});
+  describe( '/healthcheck/liveness', ()=>{
+
+    it( 'returns 200', async()=>{
+
+      const response = await supertest( server ).get( '/healthcheck/liveness' );
+
+      expect( response.status ).toBe( 200 );
+
+    } );
+
+  } );
+
+  describe( '/healthcheck/readiness', ()=>{
+
+    it( 'returns 200', async()=>{
+
+      const response = await supertest( server ).get( '/healthcheck/readiness' );
+
+      expect( response.status ).toBe( 200 );
+
+    } );
+
+    describe( 'when database is not on the latest migration', ()=>{
+
+      it( 'returns 503', async()=>{
+
+        const response = await supertest( server ).get( '/healthcheck/readiness' );
+
+        expect( response.status ).toBe( 503 );
+
+      } );
+
+    } );
+
+  } );
+
+  describe( '/healthcheck/donotexist', ()=>{
+
+    it( 'returns 404', async()=>{
+
+      const response = await supertest( server ).get( '/healthcheck/donotexist' );
+
+      expect( response.status ).toBe( 404 );
+
+    } );
+
+  } );
+
+} );

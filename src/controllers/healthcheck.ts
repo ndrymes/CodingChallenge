@@ -1,46 +1,42 @@
+/* eslint-disable valid-jsdoc */
 import { Request, Response, Router } from 'express';
 
-interface IHealthcheckService {
-    isDBReady(): Promise<boolean>;
-}
+export class HealthcheckController{
 
-export class HealthcheckController {
-    private readonly healthcheckService: IHealthcheckService;
+  private router: Router;
 
-    private router: Router;
+  constructor(){
 
-    constructor(healthcheckService: IHealthcheckService) {
-        this.healthcheckService = healthcheckService;
-        this.router = Router();
-        this.router.get('/liveness', HealthcheckController.getHealthcheckLiveness);
-        this.router.get('/readiness', this.getHealthcheckReadiness.bind(this));
-    }
+    this.router = Router();
+    this.router.get( '/liveness', HealthcheckController.getHealthcheckLiveness );
+    this.router.get( '/readiness', HealthcheckController.getHealthcheckReadiness );
 
-    getRouter(): Router {
-        return this.router;
-    }
+  }
 
-    /**
+  getRouter(): Router{
+
+    return this.router;
+
+  }
+
+  /**
      * GET /healthcheck/liveness
      * Check whether app is up
      */
-    static async getHealthcheckLiveness(_: Request, res: Response): Promise<Response> {
-        return res.status(200).json({ status: 'OK' });
-    }
+  static async getHealthcheckLiveness( _: Request, res: Response ): Promise<Response>{
 
-    /**
+    return res.status( 200 ).json( { status: 'OK' } );
+
+  }
+
+  /**
      * GET /healthcheck/readiness
      * Check whether app is ready to receive traffic
      */
-    public async getHealthcheckReadiness(_: Request, res: Response): Promise<Response> {
-        if (!(await this.healthcheckService.isDBReady())) {
-            return res.status(503).json({
-                status: 'Service Unavailable'
-            });
-        }
+  static async getHealthcheckReadiness( _: Request, res: Response ): Promise<Response>{
 
-        return res.status(200).json({
-            status: 'OK'
-        });
-    }
+    return res.status( 200 ).json( { status: 'OK' } );
+
+  }
+
 }

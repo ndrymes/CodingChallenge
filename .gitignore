@@ -6,8 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-package-lock.json
-
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -107,8 +105,8 @@ public
 dist
 
 #docker-volume
-postgres-data
-postgres-test-data
+mongodb-data
+mongodb-test-data
 
 # dockest generated file
 docker-compose.dockest-generated.yml
@@ -149,3 +147,6 @@ docker-compose.dockest-generated.yml
 
 # code editor
 .idea
+
+# localstack
+.localstack
