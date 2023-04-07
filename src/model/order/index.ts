@@ -1,16 +1,16 @@
 import { Schema } from 'mongoose';
-import { IProduct } from 'src/types/types';
+import { IOrder } from 'src/types/order';
 
-export const productSchema = new Schema<IProduct>( {
-  productName: {
-    type:     String,
+export const orderSchema = new Schema<IOrder >( {
+  productId: {
+    type:     Schema.Types.ObjectId,
     required: true,
     index:    true
   },
-  amountAvailable: {
-    type:     Number,
+  buyerId: {
+    type:     Schema.Types.ObjectId,
+    ref:      'User',
     required: true,
-    min:      0,
     default:  0
   },
   cost: {
@@ -24,11 +24,8 @@ export const productSchema = new Schema<IProduct>( {
   },
   sellerId: {
     type:     Schema.Types.ObjectId,
-    ref:      'Seller',
+    ref:      'User',
     required: true,
     index:    true
   }
 } );
-
-productSchema.index( { sellerId: 1, productName: 1 } );
-

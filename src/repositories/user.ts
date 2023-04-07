@@ -1,14 +1,21 @@
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable no-restricted-syntax */
 import { Model } from 'mongoose';
-import { IUser } from 'src/model/user/types';
+import { IUser } from 'src/types/user';
 import { RoleType } from 'src/model/user/enums';
-
+import { FilterQuery, UpdateQuery, QueryOptions } from 'mongoose';
 
 export interface CreateUserPayload {
   username: string;
   role:RoleType
   password: string;
+}
+
+// I used deposit to mainatain the convention in the task, This field should be account
+export interface AllowedUpdates {
+  deposit?:string
 }
 
 export class UserRepository{
@@ -32,7 +39,7 @@ export class UserRepository{
 
   public async getUser( userId: string ): Promise<IUser>{
 
-    return this.model.findOne( { id: userId } );
+    return this.model.findOne( { _id: userId } );
 
   }
 
@@ -44,9 +51,14 @@ export class UserRepository{
 
   }
 
+  public async updateUser( query: FilterQuery<IUser>, update: UpdateQuery<IUser>, options: QueryOptions ): Promise<IUser>{
+
+    return this.model.findOneAndUpdate( query, update, options );
+
+  }
   public async deleteUser( existingUser: IUser ){
 
-    return this.model.deleteOne( { id: existingUser.id } );
+    return this.model.deleteOne( { _id: existingUser.id } );
 
   }
 
