@@ -72,8 +72,6 @@ docker-compose -f docker-compose.test.yml up -d
 npm run test
 ```
 
-I had a lot of fun building this but there are some improvements I can still make:
-
 ## API
 
 There are multiple endpoints that can be used to create an order. Please find below a POSTMAN documentation for easy guide <a href="https://documenter.getpostman.com/view/7667873/2s93XtzjgW">https://documenter.getpostman.com/view/7667873/2s93XtzjgW</a>.
@@ -83,7 +81,7 @@ There are multiple endpoints that can be used to create an order. Please find be
 I had a lot of fun building this but there are some improvements I can still make:
 
 - Add an application Monitoring tool like sentry
-- Add cache system like Redis
+- Add cache system like Redis to matain session
 - Add more test cases
 - Have a standard response helper
 - Include a makefile to ease the execution of some common tasks
