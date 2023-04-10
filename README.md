@@ -44,10 +44,17 @@ docker-compose down
 docker-compose up -d mongodb
 ```
 
+- Run `npm i` or `npm install` to install all app dependencies
+- Start the app at the root directory using
+
 -   Start your app server
 
 ```bash
 npm run start:dev
+
+For Production Purpose
+- Run `npm run build` 
+  - `npm run start` 
 
 -   Shutdown development cluster
 
