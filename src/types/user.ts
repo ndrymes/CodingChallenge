@@ -5,6 +5,6 @@ export interface IUser {
     id: string;
     username: string;
     password: string;
-    deposit: ObjectId;
+    deposit?: ObjectId;
     role: RoleType;
 }

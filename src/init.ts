@@ -4,7 +4,7 @@ import { HealthcheckController } from 'src/controllers/healthcheck';
 import { RootController } from 'src/controllers/root';
 
 import { IUser } from 'src/types/user';
-import { IProduct } from "src/types/types";
+import { IProduct } from "src/types/product";
 import { IAccount } from "src/types/account";
 import { IOrder } from "src/types/order";
 

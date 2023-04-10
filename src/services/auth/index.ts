@@ -47,13 +47,12 @@ export class AuthService {
         };
     }
 
-    public async login(loginPayload: LoginPayload, session: any): Promise<LoginResponse> {
+    public async login(loginPayload: LoginPayload): Promise<LoginResponse> {
         const { username, password } = loginPayload;
-
         const user = await this.options.userRepository.findUser(username);
+        
         if (user && (await bcrypt.compare(password, user.password)) === true) {
             const token = await this.createAccessToken(user.id, user.role);
-            session.user = user;
             return {
                 id: user.id,
                 role: user.role,

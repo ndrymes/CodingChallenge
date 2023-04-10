@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { UserService } from 'src/services/user';
-import { handleTokenAuthorization } from 'src/middlewares/handle-Token-authorization';
+import { handleTokenAuthorization } from 'src/middlewares/handle-token-authorization';
 
 interface UserControllerOptions {
     userService: UserService;

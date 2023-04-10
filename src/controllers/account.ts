@@ -2,7 +2,7 @@
 import { Request, Response, Router, NextFunction } from 'express';
 
 import { AccountService } from 'src/services/account';
-import { handleTokenAuthorization } from 'src/middlewares/handle-Token-authorization';
+import { handleTokenAuthorization } from 'src/middlewares/handle-token-authorization';
 
 interface AccountControllerOptions {
   accountService: AccountService;

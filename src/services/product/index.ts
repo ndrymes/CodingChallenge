@@ -6,7 +6,7 @@ import { ErrorCodes } from 'src/libs/errors';
 import { StandardError } from 'src/libs/standard-error';
 import { ProductRepository } from 'src/repositories/product';
 import { CreateProductPayload } from './types';
-import { IProduct } from 'src/types/types';
+import { IProduct } from 'src/types/product';
 import { CreateUserPayload } from 'src/repositories/user';
 
 interface ProductServiceOptions {

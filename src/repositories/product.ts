@@ -2,7 +2,7 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable no-restricted-syntax */
 import { Model } from 'mongoose';
-import { IProduct } from 'src/types/types';
+import { IProduct } from 'src/types/product';
 import { FilterQuery, UpdateQuery, QueryOptions } from 'mongoose';
 
 export interface CreateProductPayload {

@@ -3,9 +3,10 @@ import { logger } from 'src/libs/logger';
 import { ErrorCodeMap } from 'src/libs/errors';
 
 export const errorHandler = ()=>
-// This is an express error handler, need to the 4 variable signature
-// eslint-disable-next-line
-     (err: any, req: Request, res: Response, next: NextFunction) => {
+  // This is an express error handler, need to the 4 variable signature
+  // eslint-disable-next-line
+   (err: any, req: Request, res: Response, next: NextFunction) => {
+
     const statusCode = Number( ErrorCodeMap[ err.error_code ] );
 
     if( !Number.isNaN( statusCode ) ){
@@ -13,25 +14,23 @@ export const errorHandler = ()=>
       const logContext = {
         error_code:  err.error_code,
         status_code: statusCode,
-        context:     err.context,
-        body:        err.body
+        context:     err.context
       };
+
+      // _.defaults(logContext, req.safeLoggingRequestData); // to be determined what is this for
 
       logger.info( logContext, 'API error' );
 
       return res.status( statusCode ).send( {
         error_code: err.error_code,
-        message:    err.message,
-        body:       err.body
+        message:    err.message
       } );
 
     }
 
-    logger.error( err, 'unexpected error' );
-
-    return res.status( 500 ).send( {
-      error_code: 'SERVER_ERROR',
-      message:    'Something unexpected happened, we are investigating this issue right now'
+    return res.status( err.status || 500 ).json( {
+      message: err.message,
+      errors:  err.errors,
     } );
 
   }

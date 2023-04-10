@@ -2,18 +2,12 @@
 import { Request, Response, Router, NextFunction } from 'express';
 
 import { ProductService } from 'src/services/product';
-import { handleTokenAuthorization } from 'src/middlewares/handle-Token-authorization';
+import { handleTokenAuthorization } from 'src/middlewares/handle-token-authorization';
 
 interface ProductControllerOptions {
   productService: ProductService;
 }
 
-// todo:
-// Work on response helper
-// delete should only be done by user with proper role
-// ensusre proper role base authorization
-// add session
-// move types out
 import CONSTANTS from 'src/constants';
 
 const { ROLES: { SELLER } } = CONSTANTS;
