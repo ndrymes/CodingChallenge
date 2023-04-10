@@ -76,7 +76,7 @@ I had a lot of fun building this but there are some improvements I can still mak
 
 ## API
 
-There are multiple endpoints that can be used to create an order. Please find below a POSTMAN documentation for easy guide <a href="https://documenter.getpostman.com/view/7667873/2s93JtS4MD">https://documenter.getpostman.com/view/7667873/2s93JtS4MD</a>.
+There are multiple endpoints that can be used to create an order. Please find below a POSTMAN documentation for easy guide <a href="https://documenter.getpostman.com/view/7667873/2s93XtzjgW">https://documenter.getpostman.com/view/7667873/2s93XtzjgW</a>.
 
 # Todo
 
