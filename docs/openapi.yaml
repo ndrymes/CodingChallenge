@@ -1,0 +1,583 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: "Vending machine Swagger Docs"
+  description: "Everything related to vending machine test"
+servers:
+  - description: Local development
+    url: "http://localhost:3000"
+paths:
+  /:
+    get:
+      tags:
+        - root
+      operationId: getRoot
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Root"
+  /healthcheck/liveness:
+    get:
+      tags:
+        - healthcheck
+      operationId: getLiveness
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Healthcheck"
+  /healthcheck/readiness:
+    get:
+      tags:
+        - healthcheck
+      operationId: getReadiness
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Healthcheck"
+  /auth/register:
+    post:
+      tags:
+        - registration
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserRequest"
+      responses:
+        201:
+          $ref: "#/components/responses/RegisterUser"
+        400:
+          $ref: "#/components/responses/Error400"
+        401:
+          $ref: "#/components/responses/Error401"
+        404:
+          $ref: "#/components/responses/Error404"
+        409:
+          $ref: "#/components/responses/Error409"
+        500:
+          $ref: "#/components/responses/Error500"
+
+  /auth/login:
+    post:
+      tags:
+        - login
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        201:
+          $ref: "#/components/responses/Login"
+        400:
+          $ref: "#/components/responses/Error400"
+        401:
+          $ref: "#/components/responses/Error401"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+  /products/{productId}:
+    get:
+      tags:
+        - product
+      operationId: getSingleProduct
+      parameters:
+        - name: productId
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+    delete:
+      tags:
+        - product
+      operationId: deleteProduct
+      parameters:
+        - name: productId
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+    put:
+      tags:
+        - product
+      operationId: updateProduct
+      parameters:
+        - name: productId
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductRequest"
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+  /product:
+    post:
+      tags:
+        - product
+      operationId: product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductRequest"
+      responses:
+        202:
+          $ref: "#/components/responses/Login"
+        400:
+          $ref: "#/components/responses/Error400"
+        401:
+          $ref: "#/components/responses/Error401"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+
+  /products:
+    get:
+      tags:
+        - product
+      operationId: getAllProduct
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+  /account/deposit:
+    post:
+      tags:
+        - account
+      operationId: depositCoin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepositAccount"
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        401:
+          $ref: "#/components/responses/Error401"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+
+  /account/reset/deposit:
+    post:
+      tags:
+        - account
+      operationId: resetDeposit
+      responses:
+        400:
+          $ref: "#/components/responses/Error400"
+        500:
+          $ref: "#/components/responses/Error500"
+        404:
+          $ref: "#/components/responses/Error404"
+  
+  /order/buy:
+    post:
+      tags:
+        - order
+      operationId: purchaseProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderRequest"
+      responses:
+        202:
+          $ref: "#/components/responses/Login"
+        400:
+          $ref: "#/components/responses/Error400"
+        401:
+          $ref: "#/components/responses/Error401"
+        404:
+          $ref: "#/components/responses/Error404"
+        500:
+          $ref: "#/components/responses/Error500"
+  
+  /errors/{error_code}:
+    get:
+      tags:
+        - error
+        - example
+      operationId: getErrorExample
+      parameters:
+        - name: error_code
+          in: path
+          description: Error HTTP code
+          required: true
+          schema:
+            type: string
+            enum: ["200", "400", "403", "422", "500"]
+      responses:
+        200:
+          description: default response, instruction to use this endpoint
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: example error 400 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400Response"
+        403:
+          description: example error 403 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Response"
+        404:
+          description: example error 404 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404Response"
+        500:
+          description: example error 500 response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500Response"
+
+components:
+  schemas:
+    Healthcheck:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          example: "OK"
+    Root:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: "OK"
+    RegisterUserRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - username
+        - password
+        - role
+      properties:
+        username:
+          type: string
+          example: "JohnSnow"
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: "abcd1234"
+        role:
+          type: string
+          items:
+            type: string
+            enum: ["BUYER", "SELLER"]
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "userName1"
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: "abcd1234"
+    ProductRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - productName
+        - amountAvailable
+        - cost
+      properties:
+        productName:
+          type: string
+          example: "productName"
+        amountAvailable:
+          type: number
+          example: "50"
+        cost:
+          type: number
+          example: "50"
+    UpdateProductRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        productName:
+          type: string
+          example: "productName"
+        amountAvailable:
+          type: number
+          example: 50
+        cost:
+          type: number
+          example: 50
+    DepositAccount:
+      type: object
+      additionalProperties: false
+      required:
+        - amount
+      properties:
+        amount:
+          type: number
+          example: 50
+    OrderRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - productId
+        - amount
+      properties:
+        productId:
+          type: string
+          example: "5dbferrrssddddsssd344"
+        amount:
+          type: number
+          example: 2
+    UserRole:
+      type: string
+      enum: ["BUYER", "SELLER"]
+
+    Error400Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - API_VALIDATION_ERROR
+            - INVALID_JSON_FORMAT
+        message:
+          type: string
+        errors:
+          $ref: "#/components/schemas/ArrayOfErrors"
+    Error401Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - UNAUTHORIZED_REQUEST
+        message:
+          type: string
+    Error403Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - REQUEST_FORBIDDEN_ERROR
+        message:
+          type: string
+    Error404Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - USER_NOT_FOUND
+            - PRODUCT_NOT_FOUND
+        message:
+          type: string
+    Error409Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - DUPLICATE_END_USER
+        message:
+          type: string
+    Error429Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - TOO_MANY_RESEND
+        message:
+          type: string
+    Error500Response:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          enum:
+            - INTERNAL_SERVER_ERROR
+            - INTERNAL_UPSTREAM_ERROR
+        message:
+          type: string
+    ArrayOfErrors:
+      nullable: true
+      type: array
+      items:
+        oneOf:
+          - type: string
+          - type: object
+  responses:
+    RegisterUser:
+      description: User registration response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - username
+              - role
+              - token
+            properties:
+              id:
+                type: string
+                example: "eu-cc050ed9-a39f-4bd8-a4aa-2e72c9638d3f"
+              username:
+                type: string
+                example: "username"
+              token:
+                type: string
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJWRVJJRklFRCIsImVuZF91c2VyX2lkIjoiZXUtMSJ9._AJoQ7FVsVrQByrNs9oKwsZ67uMMkHa4qZYuihDhfTo
+              role:
+                $ref: "#/components/schemas/UserRole"
+    Login:
+      description: Login response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - username
+              - role
+              - token
+            properties:
+              id:
+                type: string
+                example: "eu-cc050ed9-a39f-4bd8-a4aa-2e72c9638d3f"
+              username:
+                type: string
+                example: "username"
+              token:
+                type: string
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJWRVJJRklFRCIsImVuZF91c2VyX2lkIjoiZXUtMSJ9._AJoQ7FVsVrQByrNs9oKwsZ67uMMkHa4qZYuihDhfTo
+              role:
+                $ref: "#/components/schemas/UserRole"
+    Error400:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error400Response"
+    Error401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error401Response"
+    Error404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error404Response"
+    Error409:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error409Response"
+    Error429:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error429Response"
+    Error500:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error500Response"

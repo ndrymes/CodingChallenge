@@ -17,7 +17,7 @@ export class AuthController{
   constructor( private readonly options: AuthControllerOptions ){
 
     this.router = Router();
-    this.router.post( '/user', this.register.bind( this ) );
+    this.router.post( '/register', this.register.bind( this ) );
     this.router.post( '/login', this.login.bind( this ) );
 
   }
@@ -53,7 +53,7 @@ export class AuthController{
 
     try{
 
-      const loginResponse = await this.options.authService.login( req.body, req.session );
+      const loginResponse = await this.options.authService.login( req.body );
 
       return res.status( 202 ).json( loginResponse );
 

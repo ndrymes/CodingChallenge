@@ -25,9 +25,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PG_USER=test
-      - JWT_TOKEN_SECRET=sample-jwt-secret
-      - DB_URL=mongodb://root:rootpass@127.0.0.1:27017
+      - JWT_TOKEN_SECRET=JWT_TOKEN_SECRET
+      - DB_URL = mongodb://mongodb:27017/demo
       - REDIS_URL=redis://redis:6379
       - PORT=3000
     volumes:

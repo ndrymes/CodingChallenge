@@ -2,7 +2,7 @@
 import { Request, Response, Router, NextFunction } from 'express';
 
 import { OrderService } from 'src/services/order';
-import { handleTokenAuthorization } from 'src/middlewares/handle-Token-authorization';
+import { handleTokenAuthorization } from 'src/middlewares/handle-token-authorization';
 import constants  from "src/constants";
 
 const { ROLES : { BUYER }} = constants
@@ -18,7 +18,7 @@ export class OrderController{
   constructor( private readonly options: OrderControllerOptions ){
 
     this.router = Router();
-    this.router.post( '/order', handleTokenAuthorization( BUYER ),  this.create.bind( this ) );
+    this.router.post( '/buy', handleTokenAuthorization( BUYER ),  this.create.bind( this ) );
 
   }
 
