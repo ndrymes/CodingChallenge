@@ -1,5 +1,5 @@
 
-# LeonardoTest
+# Vending Machine
 
 The task is to Build a REST API for a vending machine.
 
